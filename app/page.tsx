@@ -1,95 +1,169 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client'
+
+import React, { useState, useEffect } from 'react'
+import styles from './page.module.css'
+import abstractData from '@/abstract.json'
+import { inter, spaceGrotesk } from '@/app/fonts'
+import {
+	FaNetworkWired,
+	FaBook,
+	FaIndustry,
+	FaPiggyBank,
+	FaBalanceScale,
+	FaHandHoldingHeart,
+	FaLightbulb,
+} from 'react-icons/fa' // Add other icons as needed
+import ScrollAnimation from '@/components/scroll-animation'
+
+const subItemStyles = {
+	'Organization & Networking': {
+		icon: FaNetworkWired,
+		gradient: 'linear-gradient(135deg, var(--primary-500), var(--primary-600))',
+	},
+	'Knowledge & Information': {
+		icon: FaBook,
+		gradient:
+			'linear-gradient(135deg, var(--secondary-500), var(--secondary-600))',
+	},
+	'Market & Production Networks': {
+		icon: FaIndustry,
+		gradient: 'linear-gradient(135deg, var(--accent-600), var(--accent-500))',
+	},
+	'Capital & Capital Network': {
+		icon: FaPiggyBank,
+		gradient: 'linear-gradient(135deg, var(--primary-500), var(--primary-600))',
+	},
+	'Good Governance, Business Ethics & Peace': {
+		icon: FaBalanceScale,
+		gradient:
+			'linear-gradient(135deg, var(--secondary-500), var(--secondary-600))',
+	},
+	'Affirmative Action': {
+		icon: FaHandHoldingHeart,
+		gradient: 'linear-gradient(135deg, var(--accent-600), var(--accent-500))',
+	},
+}
+
+interface Paragraph {
+	pillars: Record<string, string | object>
+}
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+	const [mounted, setMounted] = useState(false)
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+	useEffect(() => {
+		setMounted(true)
+	}, [])
+	const { title, subtitle, paragraphs } = abstractData[0]
+	const Bold = ({ children }: { children: React.ReactNode }) => {
+		return <span className={mounted ? inter.className : ''}>{children}</span>
+	}
+
+	function parseItalics(text: string) {
+		return text.split(/\*([^*]+)\*/).map((part, index) =>
+			index % 2 === 0 ? (
+				<span key={`text-${index}`}>{part}</span>
+			) : (
+				<strong key={`italic-${index}`}>
+					<em>{part}</em>
+				</strong>
+			)
+		)
+	}
+
+	return (
+		<main className={styles.main}>
+			<div className={styles.hero}>
+				<div className={styles.heroPattern} />
+				<h1
+					className={`${styles.title} ${mounted ? inter.className : ''}`}
+				>
+					<Bold>
+						{title.split('TIBEB').map((part, i) => (
+							<React.Fragment key={i}>
+								{part.toUpperCase()}
+								{i === 0 && (
+									<span
+										className={`${styles.tibeb} ${
+											mounted ? spaceGrotesk.className : ''
+										}`}
+									>
+										TIBEB
+									</span>
+								)}
+							</React.Fragment>
+						))}
+					</Bold>
+				</h1>
+				<h2
+					className={`${styles.subtitle} ${
+						mounted ? spaceGrotesk.className : ''
+					}`}
+				>
+					{subtitle.toUpperCase()}
+				</h2>
+			</div>
+			<ScrollAnimation />
+			<section className={`${styles.section} ${styles.fadeInSection}`}>
+				<h1
+					className={`${mounted ? spaceGrotesk.className : ''} ${
+						styles.pageTitle
+					}`}
+				>
+					Our Mission
+				</h1>
+				{/* ... */}
+			</section>
+			<section
+				className={`${styles.section} ${mounted ? inter.className : ''}`}
+			>
+				{paragraphs.map((paragraph: string | Paragraph, index: number) => (
+					<div key={index} className={styles.paragraph}>
+						{typeof paragraph === 'string' ? (
+							<p lang='en'>{parseItalics(paragraph)}</p>
+						) : (
+							<div className={styles.pillarsWrapper}>
+								{Object.entries(paragraph.pillars).map(([key, value]) => (
+									<div
+										key={key}
+										className={`${styles.pillarCard} ${styles.fadeInSection}`}
+									>
+										<div
+											className={styles.pillarHeader}
+											style={{
+												background:
+													subItemStyles[key as keyof typeof subItemStyles]
+														?.gradient ||
+													'linear-gradient(135deg, #4a90e2, #87ceeb)',
+											}}
+										>
+											{(() => {
+												const IconComponent =
+													subItemStyles[key as keyof typeof subItemStyles]
+														?.icon || FaLightbulb
+												return <IconComponent className={styles.pillarIcon} />
+											})()}
+											<h3 className={styles.pillarTitle}>{key}</h3>
+										</div>
+										<div className={styles.pillarContent}>
+											{typeof value === 'string'
+												? value
+												: JSON.stringify(value)}
+										</div>
+									</div>
+								))}
+							</div>
+						)}
+					</div>
+				))}
+			</section>
+			<section className={`${styles.section} ${styles.fadeInSection}`}>
+				<div className={styles.stats}>
+					<div className={styles.statNumber}>100+</div>
+					<div className={styles.statNumber}>50K+</div>
+					<div className={styles.statNumber}>25+</div>
+				</div>
+			</section>
+		</main>
+	)
 }

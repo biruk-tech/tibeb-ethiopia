@@ -1,0 +1,251 @@
+.container {
+	min-height: 100vh;
+	background: var(--background-primary);
+	padding-top: 64px;
+}
+
+.hero {
+	position: relative;
+	min-height: 30vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background: linear-gradient(
+		135deg,
+		var(--primary-900),
+		var(--primary-800),
+		var(--secondary-900)
+	);
+	padding: 3rem 1rem;
+	overflow: hidden;
+	text-align: center;
+	gap: 1rem;
+}
+
+.hero::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L15 30L30 60L45 30L30 0z' fill='%23ffffff' fill-opacity='0.05'/%3E%3C/svg%3E");
+	opacity: 0.1;
+	animation: patternFloat 30s linear infinite;
+}
+
+@keyframes patternFloat {
+	0% {
+		background-position: 0 0;
+	}
+	100% {
+		background-position: 60px 60px;
+	}
+}
+
+.title {
+	font-size: 1.75rem;
+	color: var(--background-primary);
+	position: relative;
+}
+
+.subtitle {
+	font-size: 1.25rem;
+	color: var(--secondary-300);
+	position: relative;
+	z-index: 1;
+}
+
+.grid {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 2rem 1rem;
+	display: grid;
+	gap: 2rem;
+	grid-template-columns: 1fr;
+}
+
+/* Grid ordering for mobile */
+.grid > div:nth-of-type(1) {
+	order: 1;
+}
+.grid > div:nth-of-type(2) {
+	order: 2;
+}
+.grid > div:nth-of-type(3) {
+	order: 4;
+}
+.grid > div:nth-of-type(4) {
+	order: 3;
+}
+.grid > div:nth-of-type(5) {
+	order: 5;
+}
+
+.textBox {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+
+.imageBox {
+	position: relative;
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.image {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 0.6s ease;
+}
+
+.imageBox:hover .image {
+	transform: scale(1.05);
+}
+
+.heading2 {
+	font-size: 1.75rem;
+	color: var(--primary-800);
+	position: relative;
+	padding-bottom: 0.5rem;
+}
+
+.heading2::after {
+	content: '';
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 60px;
+	height: 3px;
+	background: var(--secondary-500);
+	transition: width 0.3s ease;
+}
+
+.heading2:hover::after {
+	width: 100px;
+}
+
+.paragraph {
+	font-size: 1.2rem;
+	line-height: 1.8;
+	color: var(--text-secondary);
+}
+
+.fullWidth {
+	grid-column: 1 / -1;
+	text-align: center;
+}
+
+.valuesGrid {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 1.5rem;
+	margin-top: 2rem;
+}
+
+.valueCard {
+	background: var(--background-primary);
+	padding: 1.5rem;
+	border-radius: 8px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+	transition: all 0.3s ease;
+}
+
+.heading3 {
+	font-size: 1.5rem;
+	color: var(--primary-700);
+	margin-bottom: 1rem;
+}
+
+.placeholderImage {
+	width: 100%;
+	height: 200px;
+	background-color: #f0f0f0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 8px;
+	color: #666;
+	font-size: 1.2rem;
+	border: 2px dashed #ccc;
+	transition: all 0.3s ease;
+}
+
+.placeholderImage:hover {
+	background-color: #e8e8e8;
+	border-color: #999;
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.placeholderContent {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.fullWidth .heading2 {
+	text-align: left;
+}
+
+.fullWidth .heading2::after {
+	left: 0;
+	transform: none;
+}
+
+/* Tablet and Desktop styles */
+@media (min-width: 768px) {
+	.hero {
+		min-height: 40vh;
+		padding: 4rem 2rem;
+	}
+
+	.title {
+		font-size: 3rem;
+	}
+
+	.subtitle {
+		font-size: 1.5rem;
+	}
+
+	.grid {
+		padding: 4rem 2rem;
+		gap: 4rem;
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+
+	.grid > div:nth-of-type(3) {
+		order: 3;
+	}
+	.grid > div:nth-of-type(4) {
+		order: 4;
+	}
+
+	.heading2 {
+		font-size: 2rem;
+	}
+
+	.paragraph {
+		font-size: 1.1rem;
+	}
+
+	.valuesGrid {
+		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+		gap: 2rem;
+		margin-top: 3rem;
+	}
+
+	.valueCard {
+		padding: 2rem;
+	}
+
+	.placeholderImage {
+		height: 300px;
+	}
+}
